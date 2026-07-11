@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal — Da'wah &amp; Learning Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#12222b;
+    --navy-soft:#2c4048;
+    --paper:#f7f5f0;
+    --panel:#ffffff;
+    --gold:#a9832e;
+    --gold-soft:#c9a75c;
+    --slate:#5c6f72;
+    --crimson:#7a3230;
+    --line: rgba(18,34,43,0.12);
+    --sidebar-w: 264px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--navy);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+  }
+
+  h1,h2,h3{
+    font-family:'Source Serif 4', serif;
+    color:var(--navy);
+    letter-spacing:-0.01em;
+    font-weight:600;
+  }
+
+  .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:500;
+  }
+
+  a{ color:inherit; }
+
+  /* ===== LAYOUT ===== */
+  .shell{
+    display:flex;
+    align-items:flex-start;
+    min-height:100vh;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar{
+    position:sticky;
+    top:0;
+    height:100vh;
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--navy);
+    color:#dfe6e5;
+    padding:40px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .brand .label{ color:var(--gold-soft); margin-bottom:14px; display:block; }
+  .brand h1{
+    color:#f4f1e8;
+    font-size:1.5rem;
+    line-height:1.28;
+    margin-bottom:6px;
+  }
+  .brand .subtitle{
+    font-size:13px;
+    color:#9aabab;
+    margin-bottom:36px;
+  }
+
+  nav.toc{ display:flex; flex-direction:column; gap:3px; }
+  nav.toc a{
+    text-decoration:none;
+    font-size:14px;
+    color:#b7c2c1;
+    padding:10px 12px;
+    border-left:2px solid transparent;
+    transition:color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  nav.toc a .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:#5f7377;
+  }
+  nav.toc a:hover{ color:#f4f1e8; }
+  nav.toc a.active{
+    color:#f4f1e8;
+    border-left-color:var(--gold);
+    background:rgba(244,241,232,0.05);
+  }
+  nav.toc a.active .idx{ color:var(--gold-soft); }
+
+  .sidebar-foot{
+    font-size:11.5px;
+    color:#5f7377;
+    line-height:1.6;
+    border-top:1px solid rgba(255,255,255,0.08);
+    padding-top:18px;
+  }
+  .sidebar-foot strong{ color:#b7c2c1; display:block; margin-bottom:2px; font-weight:500; }
+
+  /* ---- Main ---- */
+  main{
+    flex:1;
+    min-width:0;
+  }
+
+  .band{
+    padding:88px 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .band.compact{ padding:64px 64px; }
+  .band-head{ max-width:640px; margin-bottom:44px; }
+  .band-head .label{ margin-bottom:14px; display:block; }
+  .band-head h2{ font-size:2rem; }
+  .band-lede{ color:var(--slate); font-size:1.05rem; max-width:640px; margin-top:14px; }
+
+  /* ---- Cover band ---- */
+  .cover{
+    padding:100px 64px 80px;
+  }
+  .cover .label{ margin-bottom:20px; display:block; }
+  .cover h1{
+    font-size:clamp(2.1rem, 4vw, 3.1rem);
+    line-height:1.14;
+    max-width:760px;
+    margin-bottom:22px;
+  }
+  .cover p.lede{
+    font-size:1.15rem;
+    color:var(--slate);
+    max-width:600px;
+    margin-bottom:36px;
+  }
+  .cover-meta{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    max-width:700px;
+  }
+  .cover-meta div .label{ margin-bottom:6px; }
+  .cover-meta div .value{ font-size:14.5px; color:var(--navy); font-weight:500; }
+
+  /* ---- Problem grid ---- */
+  .problem-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .problem-card{
+    background:var(--panel);
+    padding:30px 26px;
+  }
+  .problem-card .label{ margin-bottom:14px; display:block; }
+  .problem-card h3{ font-size:1.1rem; margin-bottom:10px; font-weight:600; }
+  .problem-card p{ font-size:14.5px; color:var(--slate); }
+
+  /* ---- Vision panel ---- */
+  .vision-panel{
+    background:var(--navy);
+    color:#f4f1e8;
+    padding:64px 56px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+  .vision-panel .label{ color:var(--gold-soft); margin-bottom:16px; display:block; }
+  .vision-panel blockquote{
+    font-family:'Source Serif 4', serif;
+    font-size:1.5rem;
+    line-height:1.42;
+    font-weight:400;
+  }
+  .vision-panel blockquote .accent{ color:var(--gold-soft); font-weight:600; }
+  .vision-side{ font-size:14.5px; color:#c3cccb; border-left:1px solid rgba(244,241,232,0.16); padding-left:32px; }
+  .vision-side p + p{ margin-top:14px; }
+
+  /* ---- Roadmap (dynamic) ---- */
+  .phase-pills{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:36px;
+  }
+  .phase-pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    padding:12px 18px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    cursor:pointer;
+    color:var(--slate);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .phase-pill .n{
+    width:20px; height:20px;
+    border-radius:50%;
+    border:1px solid var(--slate);
+    display:flex; align-items:center; justify-content:center;
+    font-size:10.5px;
+    flex-shrink:0;
+  }
+  .phase-pill:hover{ border-color:var(--gold); color:var(--navy); }
+  .phase-pill.active{
+    background:var(--navy);
+    border-color:var(--navy);
+    color:#f4f1e8;
+  }
+  .phase-pill.active .n{ border-color:var(--gold-soft); color:var(--gold-soft); }
+
+  .phase-detail{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:40px;
+    min-height:280px;
+    position:relative;
+  }
+  .phase-pane{
+    display:none;
+    animation:fadeIn 0.35s ease;
+  }
+  .phase-pane.active{ display:block; }
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .phase-pane .when{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:10px;
+  }
+  .phase-pane h3{ font-size:1.5rem; margin-bottom:14px; }
+  .phase-pane p{ color:var(--slate); max-width:640px; margin-bottom:16px; }
+  .phase-pane ul{ list-style:none; max-width:640px; }
+  .phase-pane li{
+    position:relative;
+    padding-left:22px;
+    margin-bottom:10px;
+    font-size:15px;
+    color:var(--navy-soft);
+  }
+  .phase-pane li::before{
+    content:"";
+    position:absolute;
+    left:0; top:9px;
+    width:7px; height:1.5px;
+    background:var(--gold);
+  }
+  .phase-progress{
+    display:flex;
+    gap:4px;
+    margin-top:28px;
+  }
+  .phase-progress span{
+    height:3px;
+    flex:1;
+    background:var(--line);
+  }
+  .phase-progress span.done{ background:var(--gold); }
+
+  /* ---- Safeguards ---- */
+  .safeguard-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .safeguard-card{
+    background:var(--panel);
+    padding:26px 28px;
+  }
+  .safeguard-card h4{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--crimson);
+    margin-bottom:8px;
+  }
+  .safeguard-card p{ font-size:14.5px; color:var(--slate); }
+
+  /* ---- Practical notes ---- */
+  .notes-list{ max-width:720px; }
+  .notes-list li{
+    list-style:none;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:16px;
+  }
+  .notes-list li:first-child{ padding-top:0; }
+  .notes-list .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--gold);
+  }
+  .notes-list p{ color:var(--slate); font-size:15px; }
+
+  /* ---- Closing ---- */
+  .closing-band{
+    padding:88px 64px 100px;
+  }
+  .closing-inner{
+    max-width:620px;
+  }
+  .closing-inner h2{ font-size:2rem; margin-bottom:18px; }
+  .closing-inner p{ color:var(--slate); margin-bottom:14px; }
+  .sign-block{
+    margin-top:44px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    font-size:14.5px;
+    color:var(--navy-soft);
+  }
+  .sign-block .role{ color:var(--slate); font-size:13px; margin-top:2px; }
+
+  /* ---- Reveal ---- */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (max-width: 980px){
+    .shell{ flex-direction:column; }
+    .sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      flex-direction:row;
+      align-items:center;
+      padding:20px 24px;
+      overflow-x:auto;
+      gap:24px;
+    }
+    .sidebar-foot{ display:none; }
+    .brand{ display:none; }
+    nav.toc{ flex-direction:row; gap:4px; }
+    nav.toc a{ white-space:nowrap; padding:8px 12px; border-left:none; border-bottom:2px solid transparent; }
+    nav.toc a.active{ border-left:none; border-bottom-color:var(--gold); }
+    .band, .band.compact, .cover, .closing-band{ padding:56px 24px; }
+    .problem-grid, .safeguard-grid{ grid-template-columns:1fr; }
+    .vision-panel{ grid-template-columns:1fr; padding:44px 28px; }
+    .vision-side{ border-left:none; border-top:1px solid rgba(244,241,232,0.16); padding-left:0; padding-top:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <span class="label">Proposal · v1</span>
+        <h1>Da'wah &amp; Learning Initiative</h1>
+        <div class="subtitle">Prepared for review — not yet a decision</div>
+      </div>
+      <nav class="toc" id="toc">
+        <a href="#overview" class="active"><span class="idx">00</span> Overview</a>
+        <a href="#problem"><span class="idx">01</span> The Problem</a>
+        <a href="#vision"><span class="idx">02</span> The Vision</a>
+        <a href="#roadmap"><span class="idx">03</span> Roadmap</a>
+        <a href="#safeguards"><span class="idx">04</span> Safeguards</a>
+        <a href="#notes"><span class="idx">05</span> Practical Notes</a>
+        <a href="#next"><span class="idx">06</span> Next Steps</a>
+      </nav>
+    </div>
+    <div class="sidebar-foot">
+      <strong>Prepared by</strong>
+      Your son, on your request
+    </div>
+  </aside>
+
+  <main>
+
+    <section class="cover" id="overview">
+      <span class="label">A proposal for consideration</span>
+      <h1>A learning initiative built around your knowledge, not your name.</h1>
+      <p class="lede">A structured path for taking your teaching — as a Hafiz, Alim, Mufti, and physician — beyond individual conversations, toward a lasting institute in fiqh, aqeedah, Arabic, tafsir, and qirat.</p>
+      <div class="cover-meta">
+        <div>
+          <div class="label">Prepared for</div>
+          <div class="value">Dr. Zafarul Huda Khan</div>
+        </div>
+        <div>
+          <div class="label">Status</div>
+          <div class="value">Draft for discussion</div>
+        </div>
+        <div>
+          <div class="label">Scope</div>
+          <div class="value">Content → Community → Institute</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="problem">
+      <div class="band-head reveal">
+        <span class="label">What prompted this</span>
+        <h2>Knowledge is abundant online. Guidance is not.</h2>
+        <p class="band-lede">Three patterns keep recurring, and they're the reason a more structured approach seems worth considering.</p>
+      </div>
+      <div class="problem-grid reveal">
+        <div class="problem-card">
+          <span class="label">01</span>
+          <h3>Distance from scholars</h3>
+          <p>Most people form their understanding from short clips, not from a real chain of qualified teaching.</p>
+        </div>
+        <div class="problem-card">
+          <span class="label">02</span>
+          <h3>Argument over understanding</h3>
+          <p>Comment sections have become the classroom. People debate more than they study.</p>
+        </div>
+        <div class="problem-card">
+          <span class="label">03</span>
+          <h3>Eroding adab</h3>
+          <p>Scholars, imams, and even the Sahabah are discussed with a casualness that would once have been unthinkable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band compact" id="vision" style="padding:0;">
+      <div class="vision-panel reveal">
+        <div>
+          <span class="label">The idea, plainly</span>
+          <blockquote>A platform where <span class="accent">your</span> knowledge reaches people directly — where organizing and presenting it is handled for you, but the teaching, always, remains yours.</blockquote>
+        </div>
+        <div class="vision-side">
+          <p>This is not proposed as a page built around a person. It's proposed as infrastructure for knowledge that already deserves a wider audience than individual conversations allow.</p>
+          <p>Every structural choice below is made to keep it that way.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="roadmap">
+      <div class="band-head reveal">
+        <span class="label">A path with no rush in it</span>
+        <h2>Four phases, each testing the next before it's built.</h2>
+        <p class="band-lede">Select a phase to view its detail.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="phase-pills" id="pillRow">
+          <button class="phase-pill active" data-phase="1"><span class="n">1</span> Voice &amp; Credibility</button>
+          <button class="phase-pill" data-phase="2"><span class="n">2</span> Direct Engagement</button>
+          <button class="phase-pill" data-phase="3"><span class="n">3</span> Structured Courses</button>
+          <button class="phase-pill" data-phase="4"><span class="n">4</span> The Institute</button>
+        </div>
+
+        <div class="phase-detail">
+
+          <div class="phase-pane active" data-pane="1">
+            <div class="when">Phase 1 · Roughly the first 6 months</div>
+            <h3>Establishing voice and credibility</h3>
+            <p>Before anything formal, people need to come to know the teaching and trust it. This phase is about consistent, clear content — not enrollment or structure yet.</p>
+            <ul>
+              <li>Everyday fiqh questions people actually search for — prayer, fasting, daily life rulings</li>
+              <li>Aqeedah fundamentals explained simply — a real gap in most current content</li>
+              <li>Tafsir reflections, delivered with full authority and in your own voice</li>
+              <li>Content bridging Islamic guidance with medical and health ethics — a genuinely rare combination</li>
+              <li>Two to four short lessons a week; consistency matters more than production quality here</li>
+            </ul>
+            <div class="phase-progress"><span class="done"></span><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="phase-pane" data-pane="2">
+            <div class="when">Phase 2 · Roughly months 6–12</div>
+            <h3>Building direct engagement</h3>
+            <p>A structured way for questions to reach you, and for answers to reach people clearly.</p>
+            <ul>
+              <li>Questions collected and organized by topic — answered by you, only ever arranged and edited by others for clarity</li>
+              <li>A recurring weekly series (for example, a fixed weekly fiqh or aqeedah lesson) so people return on rhythm, not by chance</li>
+              <li>A simple broadcast channel for people seriously learning, not casually scrolling — the seed of a real student base</li>
+            </ul>
+            <div class="phase-progress"><span class="done"></span><span class="done"></span><span></span><span></span></div>
+          </div>
+
+          <div class="phase-pane" data-pane="3">
+            <div class="when">Phase 3 · Roughly months 12–18</div>
+            <h3>Small, structured courses</h3>
+            <p>Before a full institute, something modest tests genuine commitment.</p>
+            <ul>
+              <li>A short structured course — ten lessons on aqeedah, or eight weeks of tajwid — live or recorded, free or low-cost</li>
+              <li>Shows who is genuinely here to learn, versus who is only browsing</li>
+              <li>Shapes what a fuller curriculum should actually contain, based on real demand</li>
+            </ul>
+            <div class="phase-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span></span></div>
+          </div>
+
+          <div class="phase-pane" data-pane="4">
+            <div class="when">Phase 4 · When the time is right</div>
+            <h3>The institute</h3>
+            <p>Fiqh, aqeedah, Arabic, tafsir, and qirat — taught by you, and in time, by other qualified teachers alongside you.</p>
+            <ul>
+              <li>Not a cold start — the natural next step for people already learning</li>
+              <li>Multiple teachers by design, so no single person becomes the center</li>
+              <li>A curriculum shaped by real questions gathered over years, not guessed at in advance</li>
+            </ul>
+            <div class="phase-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="safeguards" style="background:#f1ede4;">
+      <div class="band-head reveal">
+        <span class="label">Built with your concern in mind</span>
+        <h2>Structured so it stays about the knowledge.</h2>
+      </div>
+      <div class="safeguard-grid reveal">
+        <div class="safeguard-card">
+          <h4>No single face</h4>
+          <p>The initiative belongs to its mission, not to a person. Additional teachers join deliberately as it grows.</p>
+        </div>
+        <div class="safeguard-card">
+          <h4>No answer without a source</h4>
+          <p>Every ruling names where it comes from, training the audience to trust the chain of knowledge — not a platform.</p>
+        </div>
+        <div class="safeguard-card">
+          <h4>No debate in the comments</h4>
+          <p>Scholarly difference is presented as normal and expected, never adjudicated by an audience.</p>
+        </div>
+        <div class="safeguard-card">
+          <h4>Curation stays quiet</h4>
+          <p>Whoever organizes and edits stays behind the scenes. What people see, and learn from, is the teaching itself.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="notes">
+      <div class="band-head reveal">
+        <span class="label">Worth deciding in advance</span>
+        <h2>A few practical points.</h2>
+      </div>
+      <ul class="notes-list reveal">
+        <li>
+          <span class="tag">01</span>
+          <p>Because you are a Mufti, some fiqh questions are better answered briefly, while others need fuller context — differences between madhabs, or contemporary issues. It may sometimes be wiser to say "this needs a longer explanation" than to compress something nuanced into a short clip.</p>
+        </li>
+        <li>
+          <span class="tag">02</span>
+          <p>Tracking which content resonates and which questions recur most often, from the very start, becomes valuable later when shaping the actual institute curriculum.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="closing-band" id="next">
+      <div class="closing-inner reveal">
+        <span class="label">Before anything else</span>
+        <h2>Is this worth building?</h2>
+        <p>Everything above is a starting sketch, not a decision. It would be better to build this slowly and correctly, under your guidance, than quickly and wrong.</p>
+        <p>Your correction — on any part of this, especially anything touching fiqh, aqeedah, or how knowledge should be presented — is what happens next.</p>
+        <div class="sign-block">
+          Prepared with respect, for your review.
+          <div class="role">Jazakallahu khairan for considering it.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Phase pill / detail pane switching
+  const pills = document.querySelectorAll('.phase-pill');
+  const panes = document.querySelectorAll('.phase-pane');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const target = pill.dataset.phase;
+      pills.forEach(p => p.classList.toggle('active', p === pill));
+      panes.forEach(pane => pane.classList.toggle('active', pane.dataset.pane === target));
+    });
+  });
+
+  // Scrollspy for sidebar nav
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = Array.from(tocLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(sec => { if (sec) spy.observe(sec); });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Smooth scroll for TOC (in case scroll-behavior unsupported)
+  tocLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
